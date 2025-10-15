@@ -16,7 +16,6 @@ def no_rest_no_model(request):
     guest = [
         {"id": 1, "name": "John", "mobile": "1234567890"},
         {"id": 2, "name": "Doe", "mobile": "0987654321"},
-        {"id": 3, "name": "moh", "mobile": "151588"},
     ]
     return JsonResponse(guest, safe=False)
 
