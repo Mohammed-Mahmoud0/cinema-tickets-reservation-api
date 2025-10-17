@@ -93,9 +93,8 @@ class CBV_List(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 # 4.2 put update delete class based view  pk
-
-
 class CBV_PK(APIView):
     def get_object(self, pk):
         try:
@@ -107,15 +106,16 @@ class CBV_PK(APIView):
         guest = self.get_object(pk)
         serializer = GuestSerializer(guest)
         return Response(serializer.data)
-    
+
     def put(self, request, pk):
         guest = self.get_object(pk)
-        serializer = GuestSerializer(guest, data = request.data)
+        serializer = GuestSerializer(guest, data=request.data)
 
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def delete(self, request, pk):
         guest = self.get_object(pk)
         guest.delete()
