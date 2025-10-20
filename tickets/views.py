@@ -7,7 +7,7 @@ from rest_framework import status, filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import Http404
-from rest_framework import generics, mixins
+from rest_framework import generics, mixins, viewsets
 
 
 # 1 without REST and no models query FBV
@@ -133,6 +133,7 @@ class mixins_list(
     def post(self, request):
         return self.create(request)
 
+
 class mixins_pk(
     mixins.RetrieveModelMixin,
     mixins.UpdateModelMixin,
@@ -163,3 +164,25 @@ class generics_list(generics.ListCreateAPIView):
 class generics_pk(generics.RetrieveUpdateDestroyAPIView):
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
+
+# 7 viewsets
+
+class viewsets_guest(viewsets.ModelViewSet):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer
+
+
+class viewsets_movie(viewsets.ModelViewSet):
+    queryset = Movie.objects.all()
+    serializer_class = MovieSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['movie']
+
+class viewsets_reservation(viewsets.ModelViewSet):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
+
+# 8 find movie
+
+
+# 9 create new reservation
