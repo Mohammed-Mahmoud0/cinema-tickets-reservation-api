@@ -165,7 +165,9 @@ class generics_pk(generics.RetrieveUpdateDestroyAPIView):
     queryset = Guest.objects.all()
     serializer_class = GuestSerializer
 
+
 # 7 viewsets
+
 
 class viewsets_guest(viewsets.ModelViewSet):
     queryset = Guest.objects.all()
@@ -176,13 +178,38 @@ class viewsets_movie(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['movie']
+    search_fields = ["movie"]
+
 
 class viewsets_reservation(viewsets.ModelViewSet):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
 
-# 8 find movie
+
+# 8 find movie (here we can use any customization of endpoints we need using fbv i think we can use cbv also)
+@api_view(["GET"])
+def find_movie(request):
+    movies = Movie.objects.filter(
+        hall=request.data["hall"],
+        movie=request.data["movie"],
+    )
+    serializer = MovieSerializer(movies, many=True)
+    return Response(serializer.data)
 
 
 # 9 create new reservation
+@api_view(["POST"])
+def new_reservation(request):
+    movie = Movie.objects.get(hall=request.data["hall"], movie=request.data["movie"])
+
+    guest = Guest()
+    guest.name = request.data["name"]
+    guest.mobile = request.data["mobile"]
+    guest.save()
+
+    reservation = Reservation()
+    reservation.guest = guest
+    reservation.movie = movie
+    reservation.save()
+
+    return Response(status=status.HTTP_201_CREATED)
