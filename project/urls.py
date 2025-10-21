@@ -35,5 +35,8 @@ urlpatterns = [
     # 8 find movie
     path('fbv/findmovie', views.find_movie),
     # 9 enw reservation
-    path('fbv/newreservation', views.new_reservation)
+    path('fbv/newreservation', views.new_reservation),
+    
+    # 10 rest auth url
+    path('api-auth', include('rest_framework.urls'))
 ]
