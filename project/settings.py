@@ -38,14 +38,21 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework.authtoken",
     "tickets",
 ]
 
 REST_FRAMEWORK = {
+    # ---> this method if added here in the settings that mean that it is global and applied to all views
+    # ---> if use base auth in the views file in specific view that mean that this view only is affected(see it in generics view)
     # "DEFAULT_AUTHENTICATION_CLASSES": [
     #     "rest_framework.authentication.BasicAuthentication",
     # ],
     # "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ],
 }
 
 # AllowAny \\ IsAuthenticated \\ IsAdminUser \\ IsAuthenticatedOrReadOnly
