@@ -3,6 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.conf import settings
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -28,6 +29,10 @@ class Reservation(models.Model):
         Movie, related_name="reservation", on_delete=models.CASCADE
     )
 
+class Post(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    body = models.TextField()
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def tokenCreate(sender, instance, created, **kwargs):
